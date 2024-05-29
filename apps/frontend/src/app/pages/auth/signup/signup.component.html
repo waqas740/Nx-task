@@ -1,0 +1,56 @@
+<p-card header="Sign Up" class="signup-card">
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input id="email" type="text" pInputText formControlName="email" />
+        <div
+          *ngIf="
+            signupForm.get('email').invalid && signupForm.get('email').touched
+          "
+          class="p-error"
+        >
+          <small *ngIf="signupForm.get('email').hasError('required')"
+            >Email is required.</small
+          >
+          <small *ngIf="signupForm.get('email').hasError('email')"
+            >Invalid email address.</small
+          >
+        </div>
+      </div>
+
+      <div class="p-field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          pInputText
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            signupForm.get('password').invalid &&
+            signupForm.get('password').touched
+          "
+          class="p-error"
+        >
+          <small *ngIf="signupForm.get('password').hasError('required')"
+            >Password is required.</small
+          >
+          <small *ngIf="signupForm.get('password').hasError('minlength')"
+            >Password must be at least 6 characters.</small
+          >
+        </div>
+      </div>
+
+      <div class="p-field">
+        <button
+          type="submit"
+          pButton
+          label="Sign Up"
+          [disabled]="signupForm.invalid"
+        ></button>
+      </div>
+    </div>
+  </form>
+</p-card>

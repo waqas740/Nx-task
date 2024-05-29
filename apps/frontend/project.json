@@ -5,6 +5,10 @@
   "prefix": "app",
   "sourceRoot": "apps/frontend/src",
   "tags": [],
+  "styles": [
+    "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+    "node_modules/primeng/resources/primeng.min.css"
+  ],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
