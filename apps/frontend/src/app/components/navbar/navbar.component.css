@@ -1,0 +1,12 @@
+.navbar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 1rem;
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}

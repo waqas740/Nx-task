@@ -1,56 +1,97 @@
-<p-card header="Sign Up" class="signup-card">
-  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="email">Email</label>
-        <input id="email" type="text" pInputText formControlName="email" />
-        <div
-          *ngIf="
-            signupForm.get('email').invalid && signupForm.get('email').touched
-          "
-          class="p-error"
-        >
-          <small *ngIf="signupForm.get('email').hasError('required')"
-            >Email is required.</small
+<div class="signup-container">
+  <p-card header="Sign Up" class="signup-card">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            pInputText
+            id="name"
+            aria-describedby="name-help"
+            formControlName="name"
+            type="text"
+            [ngClass]="{
+              'ng-invalid ng-dirty': signupForm.get('name')?.invalid
+            }"
+          />
+          <div
+            *ngIf="
+              signupForm.get('name')?.invalid && signupForm.get('name')?.touched
+            "
+            class="p-error"
           >
-          <small *ngIf="signupForm.get('email').hasError('email')"
-            >Invalid email address.</small
-          >
+            <small *ngIf="signupForm.get('name')?.hasError('required')">
+              Full Name is required.
+            </small>
+          </div>
         </div>
-      </div>
 
-      <div class="p-field">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          pInputText
-          formControlName="password"
-        />
-        <div
-          *ngIf="
-            signupForm.get('password').invalid &&
-            signupForm.get('password').touched
-          "
-          class="p-error"
-        >
-          <small *ngIf="signupForm.get('password').hasError('required')"
-            >Password is required.</small
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            pInputText
+            id="email"
+            aria-describedby="email-help"
+            formControlName="email"
+            type="email"
+            [ngClass]="{
+              'ng-invalid ng-dirty': signupForm.get('email')?.invalid
+            }"
+          />
+          <small id="email-help">
+            Enter your email address to register your account.
+          </small>
+          <div
+            *ngIf="
+              signupForm.get('email')?.invalid &&
+              signupForm.get('email')?.touched
+            "
+            class="p-error"
           >
-          <small *ngIf="signupForm.get('password').hasError('minlength')"
-            >Password must be at least 6 characters.</small
-          >
+            <small *ngIf="signupForm.get('email')?.hasError('required')">
+              Email is required.
+            </small>
+            <small *ngIf="signupForm.get('email')?.hasError('email')">
+              Invalid email address.
+            </small>
+          </div>
         </div>
-      </div>
 
-      <div class="p-field">
-        <button
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            formControlName="password"
+          />
+          <div
+            *ngIf="
+              signupForm.get('password')?.invalid &&
+              signupForm.get('password')?.touched
+            "
+            class="p-error"
+          >
+            <small *ngIf="signupForm.get('password')?.hasError('required')">
+              Password is required.
+            </small>
+            <small *ngIf="signupForm.get('password')?.hasError('minlength')">
+              Password must be at least 6 characters.
+            </small>
+          </div>
+        </div>
+
+        <p-button
           type="submit"
-          pButton
           label="Sign Up"
-          [disabled]="signupForm.invalid"
-        ></button>
+          [loading]="isLoading"
+          class="w-full"
+          [disabled]="signupForm.invalid || isLoading"
+        ></p-button>
       </div>
+    </form>
+    <div class="links">
+      <a routerLink="/signin">Already have an account? Login</a>
     </div>
-  </form>
-</p-card>
+  </p-card>
+</div>

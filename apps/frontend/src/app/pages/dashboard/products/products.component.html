@@ -1,0 +1,48 @@
+<div class="product-table">
+  <p-table
+    [value]="products"
+    styleClass="p-datatable-striped"
+    [paginator]="true"
+    [rows]="10"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Reviews</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-columns="columns">
+      <tr>
+        <td><span class="p-column-title">Name</span>{{ product.name }}</td>
+        <td>
+          <span class="p-column-title">Price</span
+          >{{ product.price | currency : 'USD' }}
+        </td>
+
+        <td>
+          <span class="p-column-title">Quantity</span>{{ product.quantity }}
+        </td>
+        <td>
+          <p-tag
+            [value]="product.status"
+            [severity]="getSeverity(product.status)"
+          />
+        </td>
+        <td>
+          <span class="p-column-title">Reviews</span>
+          <p-rating
+            [(ngModel)]="product?.reviews[0].rating"
+            [readonly]="true"
+            [cancel]="false"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

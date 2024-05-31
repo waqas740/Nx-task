@@ -28,7 +28,6 @@ export class AuthController {
   })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   async login(@Request() req) {
-    console.log(req.body);
     const { user } = req;
     return this.authService.login(user);
   }

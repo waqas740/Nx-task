@@ -1,56 +1,77 @@
-<p-card header="Sign In" class="signin-card">
-  <form [formGroup]="signinForm" (ngSubmit)="onSignin()">
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="email">Email</label>
-        <input id="email" type="text" pInputText formControlName="email" />
-        <div
-          *ngIf="
-            signinForm.get('email')?.invalid && signinForm.get('email')?.touched
-          "
-          class="p-error"
-        >
-          <small *ngIf="signinForm.get('email')?.hasError('required')"
-            >Email is required.</small
-          >
-          <small *ngIf="signinForm.get('email')?.hasError('email')"
-            >Invalid email address.</small
-          >
-        </div>
-      </div>
-
-      <div class="p-field">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          pInputText
-          formControlName="password"
-        />
-        <div
-          *ngIf="
-            signinForm.get('password')?.invalid &&
-            signinForm.get('password')?.touched
-          "
-          class="p-error"
-        >
-          <small *ngIf="signinForm.get('password')?.hasError('required')"
-            >Password is required.</small
-          >
-          <small *ngIf="signinForm.get('password')?.hasError('minlength')"
-            >Password must be at least 6 characters.</small
-          >
-        </div>
-      </div>
-
-      <div class="p-field">
-        <button
-          type="submit"
-          pButton
-          label="Sign In"
-          [disabled]="signinForm?.invalid"
-        ></button>
-      </div>
+<div class="signin-container">
+  <p-card header="Sign In" class="signin-card">
+    <div class="card">
+      <p-messages [(value)]="messages" [enableService]="true" />
     </div>
-  </form>
-</p-card>
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            pInputText
+            id="email"
+            aria-describedby="email-help"
+            formControlName="email"
+            type="email"
+            [ngClass]="{
+              'ng-invalid ng-dirty': signinForm.get('email')?.invalid
+            }"
+          />
+
+          <div
+            *ngIf="
+              signinForm.get('email')?.invalid &&
+              signinForm.get('email')?.touched
+            "
+            class="p-error"
+          >
+            <small *ngIf="signinForm.get('email')?.hasError('required')"
+              >Email is required.</small
+            >
+            <small *ngIf="signinForm.get('email')?.hasError('email')"
+              >Invalid email address.</small
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            formControlName="password"
+          />
+          <div class="forget-pwd">
+            <div>Forgot Password?</div>
+          </div>
+
+          <div
+            *ngIf="
+              signinForm.get('password')?.invalid &&
+              signinForm.get('password')?.touched
+            "
+            class="p-error"
+          >
+            <small *ngIf="signinForm.get('password')?.hasError('required')"
+              >Password is required.</small
+            >
+            <small *ngIf="signinForm.get('password')?.hasError('minlength')"
+              >Password must be at least 6 characters.</small
+            >
+          </div>
+        </div>
+        <p-button
+          type="submit"
+          label="Sign In"
+          [loading]="isLoading"
+          class="w-full"
+          [disabled]="signinForm.invalid || isLoading"
+        ></p-button>
+      </div>
+    </form>
+    <div class="links">
+      <a routerLink="/signup">Don't have an account yet? Sign up</a>
+    </div>
+  </p-card>
+</div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { User } from '../../schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,9 +14,22 @@ export class AuthService {
   ) {}
 
   async register(registerUserDto: RegisterUserDto): Promise<User> {
-    registerUserDto.password = await bcrypt.hash(registerUserDto.password, 10);
-    const newUser = new this.userModel(registerUserDto);
-    return newUser.save();
+    try {
+      registerUserDto.password = await bcrypt.hash(
+        registerUserDto.password,
+        10
+      );
+      const newUser = new this.userModel(registerUserDto);
+      return newUser.save();
+    } catch (error) {
+      console.log(error.message);
+      if (error.message.includes('duplicate key error')) {
+        // Handle the duplicate key violation error
+        throw new UnprocessableEntityException('Email already exists');
+      } else {
+        throw error;
+      }
+    }
   }
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ email });
