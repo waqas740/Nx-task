@@ -9,9 +9,11 @@ logged out automatically unless they sign out promptly.
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`API_KEY`
+`NX_API_URL`
 
-`ANOTHER_API_KEY`
+`DATABASE_URL`
+
+`JWT_SECRET`
 
 ## Start the application
 Before starting the application, please follow these steps:
