@@ -1,9 +1,9 @@
 const { MongoClient } = require('mongodb');
-const dotenv = require('dotenv');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
+const { faker } = require('@faker-js/faker');
 
-dotenv.config();
-
-const uri = 'mongodb://localhost';
+const uri = process.env.DATABASE_URL;
 
 if (!uri) {
   console.error('DATABASE_URL environment variable is not set.');
@@ -17,50 +17,23 @@ async function seedDatabase() {
     await client.connect();
     const database = client.db('penny-task');
     const productsCollection = database.collection('products');
-
-    const products = [
-      {
-        name: 'Smartphone',
-        price: 699,
-        status: 'in stock',
-        quantity: 100,
+    const products = [];
+    const status = ['in stock', 'out of stock'];
+    for (let i = 1; i <= 100; i++) {
+      products.push({
+        name: faker.commerce.productName(),
+        price: faker.commerce.price({ min: 50, max: 200, dec: 0 }),
+        status: status[Math.floor(Math.random() * status.length)],
+        quantity: faker.commerce.price({ min: 100, max: 500, dec: 0 }),
         reviews: [
           {
-            rating: 5,
-            comment: 'Great phone!',
+            rating: faker.commerce.price({ min: 0, max: 5 }),
+            comment: 'Great product',
             date: new Date(),
           },
         ],
-      },
-      {
-        name: 'Novel',
-        price: 19.99,
-        description: 'A best-selling novel',
-        status: 'in stock',
-        quantity: 50,
-        reviews: [
-          {
-            rating: 4,
-            comment: 'Interesting read',
-            date: new Date(),
-          },
-        ],
-      },
-      {
-        name: 'T-Shirt',
-        price: 9.99,
-        description: 'Comfortable cotton t-shirt',
-        status: 'in stock',
-        quantity: 200,
-        reviews: [
-          {
-            rating: 4,
-            comment: 'Good quality',
-            date: new Date(),
-          },
-        ],
-      },
-    ];
+      });
+    }
 
     const result = await productsCollection.insertMany(products);
     console.log(`${result.insertedCount} products inserted.`);
@@ -70,5 +43,4 @@ async function seedDatabase() {
     await client.close();
   }
 }
-
 seedDatabase();
