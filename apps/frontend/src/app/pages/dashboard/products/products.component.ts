@@ -7,10 +7,7 @@ import { RatingModule } from 'primeng/rating';
 import { Store } from '@ngrx/store';
 import { selectProducts } from '../../../store/selectors';
 import { FormsModule } from '@angular/forms';
-interface Column {
-  field: string;
-  header: string;
-}
+import { Product } from '../../../interface/product.interface';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +17,7 @@ interface Column {
   styleUrl: './products.component.css',
 })
 export class ProductsComponent {
-  products!: any[];
+  products!: Product[];
 
   constructor(private store: Store) {
     this.store

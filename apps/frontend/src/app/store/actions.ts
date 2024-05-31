@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Product } from '../interface/product.interface';
 
 const appLoad = createAction('[App] load');
 
@@ -38,7 +39,7 @@ const setAuthToken = createAction(
 const productLoadRequest = createAction('[Product] load request');
 const productLoadSuccess = createAction(
   '[Product] load successfully',
-  props<{ products: any[] }>()
+  props<{ products: Product[] }>()
 );
 const productLoadFailure = createAction(
   '[Product] load failure',

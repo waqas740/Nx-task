@@ -10,8 +10,7 @@ export const SigUpButtonSubmitEffect = createEffect(
       ofType(AuthAction.signup),
       exhaustMap(async ({ name, email, password }) => {
         try {
-          const { user_id } = await authService.signup(name, email, password);
-
+          await authService.signup(name, email, password);
           return AuthAction.signupSuccess();
         } catch (error: any) {
           return AuthAction.signupFailure({ error: error.message });
