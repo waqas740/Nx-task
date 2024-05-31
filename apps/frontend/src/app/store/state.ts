@@ -11,6 +11,5 @@ export interface State {
   token: string | null;
   error: string | null;
   isLoading: boolean;
-
   products: Product[];
 }
