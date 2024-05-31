@@ -1,5 +1,5 @@
 import { HttpRequest, HttpEvent, HttpHandlerFn } from '@angular/common/http';
-import { environment } from 'apps/frontend/src/environments/environment.sandbox';
+import { environment } from 'apps/frontend/src/environments/environment';
 import { Observable } from 'rxjs';
 
 export function BaseUrlInterceptor(

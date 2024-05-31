@@ -1,3 +1,3 @@
 export const environment = {
-  API_URL: process.env['NX_API_URL'],
+  API_URL: 'http://35.239.62.232:3000',
 };
