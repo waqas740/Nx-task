@@ -13,7 +13,6 @@ export class ProductService {
     const response = await firstValueFrom(
       this.http.get<Product[]>(`/api/products`)
     ).catch((error) => {
-      console.log(error);
       throw error;
     });
     return response;

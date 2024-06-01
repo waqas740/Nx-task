@@ -30,8 +30,6 @@ export class AuthService {
         password,
       })
     ).catch((error) => {
-      debugger;
-      console.log(error);
       throw error;
     });
     return response;
@@ -47,7 +45,7 @@ export class AuthService {
       if (error.status == 401) {
         error.message = 'Email or password credential are not correct';
       }
-      console.log(error);
+
       throw error;
     });
 

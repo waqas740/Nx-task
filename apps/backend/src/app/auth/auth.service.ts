@@ -22,7 +22,6 @@ export class AuthService {
       const newUser = new this.userModel(registerUserDto);
       return newUser.save();
     } catch (error) {
-      console.log(error.message);
       if (error.message.includes('duplicate key error')) {
         // Handle the duplicate key violation error
         throw new UnprocessableEntityException('Email already exists');
