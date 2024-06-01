@@ -22,13 +22,12 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
-          install_components: gcloud
+          export_default_credentials: true
 
       - name: Deploy to VM
         run: |
-          gcloud auth activate-service-account --key-file=${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-          gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud compute ssh "instance-20240531-184519" \
+          --project ${{ secrets.GCP_PROJECT }} \
           --zone "us-central1-a" \
           --command "
             cd  Nx-task &&
