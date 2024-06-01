@@ -13,21 +13,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
-          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-          export_default_credentials: true
+          install_components: gcloud
 
       - name: Deploy to VM
         run: |
+          gcloud auth activate-service-account --key-file=${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud compute ssh "instance-20240531-184519" \
-            --project ${{ secrets.GCP_PROJECT }} \
-            --zone "us-central1-a" \
-            --command "
-              cd  Nx-task &&
-              git pull &&
-              npm run build
-              pm2 restart all
-            "
+          --zone "us-central1-a" \
+          --command "
+            cd  Nx-task &&
+            git pull &&
+            npm run build
+            pm2 restart all
+          "
